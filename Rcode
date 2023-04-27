@@ -1,5 +1,5 @@
 # Load the Airlines dataset
-Airlines <- read.csv("C:/Users/schac/Downloads/archive (2)/Airlines.csv")
+Airlines <- read.csv("Airlines.csv")
 
 airline <- Airlines
 head(airline)

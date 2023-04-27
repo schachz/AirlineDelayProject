@@ -1,0 +1,122 @@
+# Load the Airlines dataset
+Airlines <- read.csv("Airlines.csv")
+
+# Create a copy of the dataset
+airline <- Airlines
+
+# View the first few rows of the dataset
+head(airline)
+
+# Load necessary libraries
+library(car)
+library(tidyverse)
+library(dplyr)
+library(ggplot2)
+library(reshape2)
+
+# Get summary statistics and structure of the dataset
+summary(airline)
+str(airline)
+
+# Calculate the percentage of delayed flights in the dataset
+sum(airline$Delay == 1) / nrow(airline)
+
+# Create a table showing the count of flights by airline
+airlines_count <- airline %>%
+  group_by(Airline) %>%
+  summarise(Count = n()) %>%
+  arrange(desc(Count))
+airlines_count
+
+# Create a dataframe with airline codes and names
+airline_codes <- c("WN", "DL", "OO", "AA", "MQ", "US", "XE", "EV", "UA", "CO", "FL", "9E", "B6", "YV", "OH", "AS", "F9", "HA")
+airline_names <- c("Southwest", "Delta", "Skywest", "American Airlines", "Envoy", "US Airways Express", "JSX", "ExpressJet", "United Airlines", "Continental", "AirTran", "Endeavor", "Jetblue", "Mesa", "PSA", "Alaska", "Frontier", "Hawaiian")
+airlines_df <- data.frame(AirlineCode = airline_codes, AirlineName = airline_names)
+airlines_df
+
+# Lump airlines with low frequency together as "Other"
+airline %>%
+  filter(!is.na(airline$Airline)) %>%
+  mutate(Airline = fct_lump(Airline, n = 13)) %>%
+  count(Airline)
+
+airline <- airline %>%
+  mutate(Airline = fct_lump(Airline, n = 13))
+
+# Create histograms showing distribution of flight schedule and length
+hist(airline$DayOfWeek,xlab = "Day of the Week (Mon-Sun)",main = "# of Flights for each Day of Week")
+hist(airline$Time,xlab = "Minutes after 12AM",main = "Distribution of Flight Schedule")
+hist(airline$Length,xlab = "Length of Flight in Minutes",main = "Distribution of Flight Length")
+
+# Create a stacked bar plot showing count of delayed vs. on-time departures by airline
+ggplot(airline, aes(x = Airline, fill = factor(Delay, levels = c(1, 0)))) + 
+  geom_bar(position = "dodge") +
+  scale_fill_manual(name = "Delay Status", values = c("red", "blue"), labels = c("Delayed", "Not Delayed")) +
+  ggtitle("Count of Delayed vs Not-Delayed Departures by Airline")+
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))
+
+# Create a stacked bar plot showing count of delayed vs. on-time departures by day of week
+ggplot(airline, aes(x = factor(DayOfWeek), fill = factor(Delay, levels = c(1, 0)))) + 
+  geom_bar(position = "dodge") +
+  scale_fill_manual(name = "Delay Status", values = c("red", "blue"), labels = c("Delayed
+# Load the Airlines dataset
+Airlines <- read.csv("C:/Users/schac/Downloads/archive (2)/Airlines.csv")
+
+# Create a copy of the dataset
+airline <- Airlines
+
+# View the first few rows of the dataset
+head(airline)
+
+# Load necessary libraries
+library(car)
+library(tidyverse)
+library(dplyr)
+library(ggplot2)
+library(reshape2)
+
+# Get summary statistics and structure of the dataset
+summary(airline)
+str(airline)
+
+# Calculate the percentage of delayed flights in the dataset
+sum(airline$Delay == 1) / nrow(airline)
+
+# Create a table showing the count of flights by airline
+airlines_count <- airline %>%
+  group_by(Airline) %>%
+  summarise(Count = n()) %>%
+  arrange(desc(Count))
+airlines_count
+
+# Create a dataframe with airline codes and names
+airline_codes <- c("WN", "DL", "OO", "AA", "MQ", "US", "XE", "EV", "UA", "CO", "FL", "9E", "B6", "YV", "OH", "AS", "F9", "HA")
+airline_names <- c("Southwest", "Delta", "Skywest", "American Airlines", "Envoy", "US Airways Express", "JSX", "ExpressJet", "United Airlines", "Continental", "AirTran", "Endeavor", "Jetblue", "Mesa", "PSA", "Alaska", "Frontier", "Hawaiian")
+airlines_df <- data.frame(AirlineCode = airline_codes, AirlineName = airline_names)
+airlines_df
+
+# Lump airlines with low frequency together as "Other"
+airline %>%
+  filter(!is.na(airline$Airline)) %>%
+  mutate(Airline = fct_lump(Airline, n = 13)) %>%
+  count(Airline)
+
+airline <- airline %>%
+  mutate(Airline = fct_lump(Airline, n = 13))
+
+# Create histograms showing distribution of flight schedule and length
+hist(airline$DayOfWeek,xlab = "Day of the Week (Mon-Sun)",main = "# of Flights for each Day of Week")
+hist(airline$Time,xlab = "Minutes after 12AM",main = "Distribution of Flight Schedule")
+hist(airline$Length,xlab = "Length of Flight in Minutes",main = "Distribution of Flight Length")
+
+# Create a stacked bar plot showing count of delayed vs. on-time departures by airline
+ggplot(airline, aes(x = Airline, fill = factor(Delay, levels = c(1, 0)))) + 
+  geom_bar(position = "dodge") +
+  scale_fill_manual(name = "Delay Status", values = c("red", "blue"), labels = c("Delayed", "Not Delayed")) +
+  ggtitle("Count of Delayed vs Not-Delayed Departures by Airline")+
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))
+
+# Create a stacked bar plot showing count of delayed vs. on-time departures by day of week
+ggplot(airline, aes(x = factor(DayOfWeek), fill = factor(Delay, levels = c(1, 0)))) + 
+  geom_bar(position = "dodge") +
+  scale_fill_manual(name = "Delay Status", values = c("red", "blue"), labels = c("Delayed
